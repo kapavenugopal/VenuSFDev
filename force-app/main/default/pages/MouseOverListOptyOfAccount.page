@@ -1,0 +1,30 @@
+<apex:page standardController="Account" lightningStylesheets="true">
+    
+        <apex:pageBlock title="Hello {!$User.FirstName}">
+            You are displaying opportunities of an account {!Account.Name}.
+        </apex:pageBlock>
+        <apex:pageBlock title="Opportunities">
+        <apex:form >
+            <apex:dataTable value="{!account.Contacts}" var="contact" cellPadding="4" border="1">
+                <apex:column >
+
+                        <apex:commandLink rerender="detail">
+                        {!contact.Name}
+                            <apex:param name="cid" value="{!contact.id}"/>
+                        </apex:commandLink>
+                </apex:column>
+            </apex:dataTable>
+            </apex:form>
+        </apex:pageBlock>
+        <apex:outputPanel id="detail">
+            <apex:actionStatus startText="Requesting....">
+                <apex:facet name="Stop">
+                    <apex:detail subject="{!$CurrentPage.parameters.cid}" relatedList="false" 
+                                title="false"/>
+                    
+                </apex:facet>
+                
+            </apex:actionStatus>
+        </apex:outputPanel>
+    
+</apex:page>

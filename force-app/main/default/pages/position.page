@@ -1,0 +1,148 @@
+<apex:page standardController="Position__c" extensions="PositionController" sidebar="false" showHeader="true">
+<div id="tabs">
+<style>
+ul {
+    float: left;
+    width: 200%;
+    padding: 10;
+    margin: 0;
+    list-style-type: none;
+}
+
+b {
+    float: left;
+    align:center;
+    width: 15em;
+    text-decoration: none;
+    color: white;
+    background-color: #FFAD99;
+    padding-right: 50px;
+    padding-left: 50px; 
+    padding:5px;
+    border-right: 1px solid white;
+}
+
+b:hover {
+    background-color: #E62E00;
+}
+
+li {
+    display: inline;
+}
+</style>
+<ul>
+<li class="">
+<b href="">Positions</b>
+</li>
+<li class="">
+<b href="">Candidates</b>
+</li>
+<li class="">
+<b href="">Job Application</b>
+</li>
+<li class="">
+<b href="">Employeement Websites</b>
+</li>
+</ul>
+</div>
+
+
+<style>
+   <!-- body {
+        background-image: url("https://media.licdn.com/media/AAEAAQAAAAAAAAMBAAAAJDcxMTRjNWE5LWQzNmUtNDg3NC04NTNmLWQyOWE5OTBmMzQ4Yg.png");
+       
+    }-->
+</style>
+  <apex:sectionHeader title="Positions" subtitle="Position" />
+  
+<apex:form >
+  <apex:pageBlock title="Position Detail" mode="maindetail">
+   <center>
+   <apex:commandButton value="Edit" action="{!edit}"/>
+   <apex:commandButton value="Delete" action="{!delete}"/>
+    <apex:commandButton action="{!URLFOR($Action.Position__c.Clone, Id)}" id="Clone" value="Clone" />
+   <apex:commandButton action="{!URLFOR($Action.Position__c.Submit, Id)}" id="Submit_for_Approval" value="Submit for Approval" rendered="{!NOT( ($Profile.Name== "Standard Employee Work") || ($Profile.Name == "Standard Employee salesplat") || ($Profile.Name == "Standard Employee Work"))}"/>   
+
+   </center> 
+  <apex:pageBlockSection columns="2" showHeader="true" >
+ 
+  <apex:outputField value="{!Position__c.Name}" />
+   <apex:outputField value="{!Position__c.Ownerid}"/> 
+   <br/>
+   <apex:outputText value="{!Position__c.RecordType.DeveloperName}"/> 
+   <apex:outputField value="{!Position__c.Status__c}" rendered="{!NOT(ISBLANK(Position__c.Status__c))}"/>
+   <apex:outputField value="{!Position__c.Location__c}" />
+     <apex:outputField value="{!Position__c.Type__c}" />
+      <apex:outputField value="{!Position__c.Open_Date__c}" />
+      <apex:outputField value="{!Position__c.Funtional_Area__c}" />
+      <apex:outputField value="{!Position__c.Hire_By__c}" />
+          <apex:outputField value="{!Position__c.Job_Level__c}" />
+          <apex:outputField value="{!Position__c.Close_Date__c}" rendered="{!NOT(ISBLANK(Position__c.Close_Date__c))}" />
+              <apex:outputField value="{!Position__c.Days_Open__c}" />
+          <apex:outputField value="{!Position__c.Travel_Required__c}" rendered="{!(Position__c.Travel_Required__c)}"/>
+          <br/>
+          <br/>
+        <apex:outputField value="{!Position__c.Hiring_Manager__c}" />
+        <apex:outputField value="{!Position__c.CreatedById}" />
+           <br/>
+          <apex:outputField value="{!Position__c.CreatedDate}" />
+         <!-- <apex:outputField value="{!Position__c.No_of_Websites_posted__c}" />-->
+          </apex:pageBlockSection> 
+  <apex:pageBlockSection columns="2" showHeader="true" title="Compensation"> 
+            <apex:outputField value="{!Position__c.Min_Pay__c}" />
+             <apex:outputField value="{!Position__c.Max_Pay__c}" />
+  </apex:pageBlockSection> 
+   <apex:pageBlockSection columns="1" showHeader="true" title="Description" rendered="{! NOT(ISBLANK(Position__c.Job_Description__c)) || NOT(ISBLANK(Position__c.Responsibilities__c)) || NOT(ISBLANK(Position__c.Skills_Required__c)) || NOT(ISBLANK(Position__c.Education_Requirements__c))}"> 
+            <apex:outputField value="{!Position__c.Job_Description__c}" rendered="{!NOT(ISBLANK(Position__c.Job_Description__c))}" />
+             <apex:outputField value="{!Position__c.Responsibilities__c}" rendered="{!NOT(ISBLANK(Position__c.Responsibilities__c))}"/>
+             <apex:outputField value="{!Position__c.Skills_Required__c}" rendered="{!NOT(ISBLANK(Position__c.Skills_Required__c))}"/>
+             <apex:outputField value="{!Position__c.Education_Requirements__c}" rendered="{!NOT(ISBLANK(Position__c.Education_Requirements__c))}" />
+  </apex:pageBlockSection>
+  
+  
+  </apex:pageBlock>
+  </apex:form>
+  <apex:repeat value="{!Position__c.ProcessSteps}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="ProcessSteps"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Position__c.OpenActivities}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="OpenActivities"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Position__c.ActivityHistories}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="ActivityHistories"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Position__c.Job_applications__r}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="Job_applications__r"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Position__c.Job_Postings__r}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="Job_Postings__r"/>
+            </div>
+        </apex:repeat>
+        
+        
+ <script type="text/javascript">
+  if ('{!Position__c.Status__c}' == 'Open - Approved') hideButton("update_status");
+  function hideButton(Submit for Approval) {
+  try{
+    var buttons = parent.document.getElementsByName(Submit for Approval);
+    for (var i=0; i < buttons.length; i++) {
+      buttons[i].className="btnDisabled ";
+      buttons[i].disabled=true;
+      buttons[i].type='hidden';
+    }
+  } catch(e) {
+    // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+  }
+}
+</script>
+        
+</apex:page>

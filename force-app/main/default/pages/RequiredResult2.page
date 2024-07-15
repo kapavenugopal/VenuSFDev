@@ -1,0 +1,161 @@
+<apex:page standardcontroller="Required_Result__c" sidebar="false" extensions="weatherbycities14" action="{!getweather}"> 
+<apex:messages />
+    <apex:sectionheader title="{!$ObjectType.Required_Result__c.label} Detail" subtitle="{!Required_Result__c.Name}"/>
+    <chatter:feedwithfollowers entityId="{!Required_Result__c.Id}"/>
+    <apex:form >
+        <apex:pageblock mode="maindetail" title="{!$ObjectType.Required_Result__c.label} Detail">
+            <apex:pageblockbuttons location="top">
+                <apex:commandbutton value="Edit" action="{!Edit}" />
+                <apex:commandbutton value="Delete" action="{!Delete}"/>
+                <!-- *************** Uncomment as needed LAYOUT PAGE :: http://WWW.CLERISOFT.COM (2008-2014) *************** -->
+                    <!-- <apex:commandbutton value="Include Offline" action="{!URLFOR($Action.Required_Result__c.IncludeOffline,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Clone" action="{!URLFOR($Action.Required_Result__c.Clone,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Convert" action="{!URLFOR($Action.Required_Result__c.Convert,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Find Duplicates" action="{!URLFOR($Action.Required_Result__c.FindDup,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Request Update" action="{!URLFOR($Action.Required_Result__c.RequestUpdate,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Advanced Setup" action="{!URLFOR($Action.Required_Result__c.AdvancedSetup,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Manage Members" action="{!URLFOR($Action.Required_Result__c.ManageMembers,Required_Result__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Close Case" action="{!URLFOR($Action.Required_Result__c.CloseCase,Required_Result__c.id)}"/> -->
+                <!-- *************** Uncomment as needed LAYOUT PAGE :: http://WWW.CLERISOFT.COM (2008-2014) *************** -->
+            </apex:pageblockbuttons>
+
+            <!-- **********   [Record Type : Master ]   **********  -->
+            <apex:outputpanel >
+                <apex:pageblocksection title="Information" showheader="false" collapsible="false" columns="2">
+                    <apex:outputfield value="{!Required_Result__c.Name}"/>
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Owner"/>
+                            <apex:outputpanel >
+                            <apex:outputfield value="{!Required_Result__c.OwnerId}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                    <apex:outputfield value="{!Required_Result__c.Continents__c}"/>
+                    <apex:pageblocksectionitem />
+                    <apex:outputfield value="{!Required_Result__c.Country__c}"/>
+                    <apex:pageblocksectionitem />
+                    <apex:outputfield value="{!Required_Result__c.Cities__c}"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                <apex:pageblocksection title="System Information" showheader="false" collapsible="false" columns="2">
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Created By"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!Required_Result__c.CreatedById}"/>&nbsp;, 
+                            <apex:outputfield value="{!Required_Result__c.CreatedDate}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Last Modified By"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!Required_Result__c.LastModifiedById}"/>&nbsp;, 
+                            <apex:outputfield value="{!Required_Result__c.LastModifiedDate}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                </apex:pageblocksection>
+            </apex:outputpanel>                    
+                <apex:pageblocksection title="Map" showheader="true" collapsible="false" columns="1" >  
+                <p><b>This map shows the locations of City you have selected</b></p>                  
+                </apex:pageblocksection>             
+        </apex:pageBlock>
+    <!-- For development use only.
+         Add a Google API key to use in production. See 
+         https://developers.google.com/maps/documentation/javascript/tutorial 
+         for details of how to obtain a Google API key. -->
+    <apex:includeScript value="https://maps.googleapis.com/maps/api/js"/>
+    
+    <script type="text/javascript">
+        var applicants = [];
+        var countApplicantsGeocoded = 0;
+        var map;
+        var mapBoundary;
+        var geocoder;
+        var applicantInfoPanel = new google.maps.InfoWindow();
+        
+        function loadMap() {
+            var mapCanvas = document.getElementById('{!$Component.mapContainer}');
+            var mapOptions = {
+                center: { lat: 40, lng: -95 },
+                zoom: 4,
+                maxZoom: 10,
+                scrollwheel: true
+            };
+            map = new google.maps.Map(mapCanvas, mapOptions);
+            mapBoundary = new google.maps.LatLngBounds();
+                   
+            loadApplicants();
+            plotApplicantMarkers();
+        }
+        
+        // Convert applicants from sObjects to JavaScript objects
+        function loadApplicants() {
+        <apex:repeat value="{!Required_Result__c}" var="jobApp">
+                applicants.push({ 
+                    name: "{!JSENCODE(jobApp.Name + ' ' )}",
+                    address: "{!JSENCODE(jobApp.Continents__r.Name  + ', ' + 
+                                        jobApp.Country__r.Name + ', ' + 
+                                        jobApp.Cities__r.Name )}",
+                    viewLink: "{!JSENCODE(LINKTO(jobApp.Name + ' ' , 
+                                        $Action.Required_Result__c.View, 
+                                        jobApp))}"
+                });
+            </apex:repeat>
+        }
+        
+        // Place markers on the map for each applicant
+        function plotApplicantMarkers() {
+            geocoder = new google.maps.Geocoder();
+            for(var idex = 0 ; idex < applicants.length ; idex++) {
+                geocodeAndCreateMarker(applicants[idex]);
+            }
+        }
+        
+        // Convert address to lat & long, and create actual marker
+        function geocodeAndCreateMarker(applicant) {
+            geocoder.geocode({'address':applicant.address},function(results, status){
+
+                countApplicantsGeocoded++;
+
+                // Add marker for geocoded address
+                if(status == google.maps.GeocoderStatus.OK) {
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                    });
+                    mapBoundary.extend(marker.position);
+                    
+                    google.maps.event.addListener(marker, 'click', function() {
+                        applicantInfoPanel.setContent(applicant.viewLink + 
+                            "<br/>\n" + applicant.address);
+                        applicantInfoPanel.open(map, marker);
+                    });
+                }
+                
+                // If we're done geocoding, re-center and zoom the map
+                if(countApplicantsGeocoded >= applicants.length) {
+                    map.fitBounds(mapBoundary);
+                }
+            });
+        }
+        
+        google.maps.event.addDomListener(window, 'load', loadMap);
+    </script>
+
+    <apex:outputPanel layout="block" id="mapContainer" style="height: 300px ;width:80%;left:90px;" >
+        Loading map...
+    </apex:outputPanel>
+    <apex:pageBlock title="Weather Details:">
+            <apex:pageBlockTable title="dfsdf" columns="1" id="result2" value="{!weather}" var="hh" >
+                <apex:column value="{!hh}" style="background-color:#d9d9d9"/>
+            </apex:pageBlockTable>
+       </apex:pageBlock>
+      
+    </apex:form>
+
+    <!-- **********   [Related Lists for Record Type : Master ]   **********  -->
+    <apex:outputpanel >
+        <apex:relatedlist list="OpenActivities" title="Open Activities"/>
+        <apex:relatedlist list="ActivityHistories" title="Activity History"/>
+    </apex:outputpanel>
+    <center><br/>
+           </center><br/>
+</apex:page>

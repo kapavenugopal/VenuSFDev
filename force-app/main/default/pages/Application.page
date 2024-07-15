@@ -1,0 +1,38 @@
+<apex:page standardController="Application__c" title="Application For {!Application__c}" >
+    <apex:Detail subject="{!Application__c.ID}" relatedList="true" />
+
+<script type="text/javascript">
+// The code below is executed as soon as the page loads. Based on the value of the Status__c field
+// it either hides or renames the update_status button
+if ('{!Application__c.Status__c}' == 'Submitted') renameButton("update_status", "Mark as In-Review");
+if ('{!Application__c.Status__c}' == 'In-Review') hideButton("update_status");
+if ('{!Application__c.Status__c}' == 'Deposit Pending') renameButton("update_status", "Confirm Deposit Received");
+if ('{!Application__c.Status__c}' == 'Deposit Received') hideButton("update_status");
+if ('{!Application__c.Status__c}' == 'Approved') hideButton("update_status");
+if ('{!Application__c.Status__c}' == 'Rejected') hideButton("update_status");
+
+function hideButton(btnName) {
+  try{
+    var buttons = parent.document.getElementsByName(btnName);
+    for (var i=0; i < buttons.length; i++) {
+      buttons[i].className="btnDisabled ";
+      buttons[i].disabled=true;
+      buttons[i].type='hidden';
+    }
+  } catch(e) {
+    // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+  }
+}
+
+function renameButton(btnName, newTitle) {
+  try{
+    var buttons = parent.document.getElementsByName(btnName);
+    for (var i=0; i < buttons.length; i++) {
+      buttons[i].value=newTitle;
+    }
+  } catch(e) {
+    // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+  }
+}
+</script>
+</apex:page>

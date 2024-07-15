@@ -1,0 +1,4 @@
+<!-- Begin Default Content REMOVE THIS -->
+ <apex:page standardController="Position__c" recordSetVar="Products">
+
+</apex:page>

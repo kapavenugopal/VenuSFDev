@@ -1,0 +1,21 @@
+<apex:page sidebar="false">
+    <apex:pageBlock title="User Status">
+        <apex:pageBlockSection columns="1">
+        
+            {!$User.FirstName}{!$User.LastName}
+            ({!$User.Username})
+           
+            {! $User.FirstName & ' ' & $User.LastName }
+            <p>Today's date is {!TODAY()}</p>
+            <p>Next week date is {!TODAY() + 7}</p>
+            <p>{!year(today())}</p>
+            <p>{!day(today())}</p>
+            <p>{!day(today() + 2)}</p>
+            {!sqrt(49)}
+            {!max(1,2,3,4,5,6,7,8,99)}
+            {!contains('salesforce.com','force.com ')}
+            <p>{!If(contains('salesforce.com','force.com'),'yep','nope')} </p>
+            <p>{!if(day(Today())<15,'Below 15th','15th or after 15th')}</p>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

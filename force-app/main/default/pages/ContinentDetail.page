@@ -1,0 +1,151 @@
+<apex:page standardcontroller="Continents__c">
+<apex:messages />
+    <apex:sectionheader title="{!$ObjectType.Continents__c.label} Detail" subtitle="{!Continents__c.Name}"/>
+    <chatter:feedwithfollowers entityId="{!Continents__c.Id}"/>
+    <apex:form >
+        <apex:pageblock mode="maindetail" title="{!$ObjectType.Continents__c.label} Detail">
+            <apex:pageblockbuttons location="top">
+                <apex:commandbutton value="Edit" action="{!Edit}"/>
+                <apex:commandbutton value="Delete" action="{!Delete}"/>
+                <!-- *************** Uncomment as needed LAYOUT PAGE :: http://WWW.CLERISOFT.COM (2008-2014) *************** -->
+                    <!-- <apex:commandbutton value="Include Offline" action="{!URLFOR($Action.Continents__c.IncludeOffline,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Clone" action="{!URLFOR($Action.Continents__c.Clone,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Convert" action="{!URLFOR($Action.Continents__c.Convert,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Find Duplicates" action="{!URLFOR($Action.Continents__c.FindDup,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Request Update" action="{!URLFOR($Action.Continents__c.RequestUpdate,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Advanced Setup" action="{!URLFOR($Action.Continents__c.AdvancedSetup,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Manage Members" action="{!URLFOR($Action.Continents__c.ManageMembers,Continents__c.id)}"/> -->
+                    <!-- <apex:commandbutton value="Close Case" action="{!URLFOR($Action.Continents__c.CloseCase,Continents__c.id)}"/> -->
+                <!-- *************** Uncomment as needed LAYOUT PAGE :: http://WWW.CLERISOFT.COM (2008-2014) *************** -->
+            </apex:pageblockbuttons>
+
+            <!-- **********   [Record Type : Master ]   **********  -->
+            <apex:outputpanel >
+                <apex:pageblocksection title="Information" showheader="false" collapsible="false" columns="2">
+                    <apex:outputfield value="{!Continents__c.Name}"/>
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Owner"/>
+                            <apex:outputpanel >
+                            <apex:outputfield value="{!Continents__c.OwnerId}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="System Information" showheader="false" collapsible="false" columns="2">
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Created By"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!Continents__c.CreatedById}"/>&nbsp;, 
+                            <apex:outputfield value="{!Continents__c.CreatedDate}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="Last Modified By"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!Continents__c.LastModifiedById}"/>&nbsp;, 
+                            <apex:outputfield value="{!Continents__c.LastModifiedDate}"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Map" showheader="true" collapsible="false" columns="1" >     
+                 <p><b>This map shows the locations of Continent you have selected</b></p>               
+                </apex:pageblocksection>
+            </apex:outputpanel>
+        </apex:pageblock>
+    </apex:form>
+   
+
+    <!-- For development use only.
+         Add a Google API key to use in production. See 
+         https://developers.google.com/maps/documentation/javascript/tutorial 
+         for details of how to obtain a Google API key. -->
+    <apex:includeScript value="https://maps.googleapis.com/maps/api/js"/>
+    
+    <script type="text/javascript">
+        var applicants = [];
+        var countApplicantsGeocoded = 0;
+        var map;
+        var mapBoundary;
+        var geocoder;
+        var applicantInfoPanel = new google.maps.InfoWindow();
+        
+        function loadMap() {
+            var mapCanvas = document.getElementById('{!$Component.mapContainer}');
+            var mapOptions = {
+                center: { lat: 40, lng: -95 },
+                zoom: 4,
+                maxZoom: 2,
+                scrollwheel: true
+            };
+            map = new google.maps.Map(mapCanvas, mapOptions);
+            mapBoundary = new google.maps.LatLngBounds();
+                   
+            loadApplicants();
+            plotApplicantMarkers();
+        }
+        
+        // Convert applicants from sObjects to JavaScript objects
+        function loadApplicants() {
+        <apex:repeat value="{!Continents__c}" var="jobApp">
+                applicants.push({ 
+                    name: "{!JSENCODE(jobApp.Name + ' ' )}",
+                    address: "{!JSENCODE(jobApp.Name)}",
+                    viewLink: "{!JSENCODE(LINKTO(jobApp.Name + ' ' , 
+                                        $Action.Continents__c.View, 
+                                        jobApp))}"
+                });
+            </apex:repeat>
+        }
+        
+        // Place markers on the map for each applicant
+        function plotApplicantMarkers() {
+            geocoder = new google.maps.Geocoder();
+            for(var idex = 0 ; idex < applicants.length ; idex++) {
+                geocodeAndCreateMarker(applicants[idex]);
+            }
+        }
+        
+        // Convert address to lat & long, and create actual marker
+        function geocodeAndCreateMarker(applicant) {
+            geocoder.geocode({'address':applicant.address},function(results, status){
+
+                countApplicantsGeocoded++;
+
+                // Add marker for geocoded address
+                if(status == google.maps.GeocoderStatus.OK) {
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                    });
+                    mapBoundary.extend(marker.position);
+                    
+                    google.maps.event.addListener(marker, 'click', function() {
+                        applicantInfoPanel.setContent(applicant.viewLink + 
+                            "<br/>\n" + applicant.address);
+                        applicantInfoPanel.open(map, marker);
+                    });
+                }
+                
+                // If we're done geocoding, re-center and zoom the map
+                if(countApplicantsGeocoded >= applicants.length) {
+                    map.fitBounds(mapBoundary);
+                }
+            });
+        }
+        
+        google.maps.event.addDomListener(window, 'load', loadMap);
+    </script>
+
+    <apex:outputPanel layout="block" id="mapContainer" style="height: 300px ;width:80%;left:90px;" >
+        Loading map...
+    </apex:outputPanel>
+    <!-- **********   [Related Lists for Record Type : Master ]   **********  -->
+    <apex:outputpanel >
+        <apex:relatedlist list="OpenActivities" title="Open Activities"/>
+        <apex:relatedlist list="ActivityHistories" title="Activity History"/>
+        <apex:relatedlist list="Contries__r" title="Contries"/>
+        <apex:relatedlist list="cities__r" title="cities"/>
+        <apex:relatedlist list="Required_Results__r" title="Required Results"/>
+    </apex:outputpanel>
+    <center><br/>
+         </center><br/>
+</apex:page>

@@ -1,0 +1,28 @@
+<template>
+    <b><lightning-combobox
+        label="Select Base Currency"
+        value={baseCurrency}
+        options={currencyOptions}
+        onchange={handleBaseCurrencyChange}
+    ></lightning-combobox></b>
+    <lightning-card title="Exchange Rates">
+        <template if:true={exchangeRates}>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th class="slds-text-align_center" style="border: 1px solid black;">Currency</th>
+                        <th class="slds-text-align_center" style="border: 1px solid black;">Exchange Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={exchangeRates} for:item="exchangeRate">
+                        <tr key={exchangeRate.currency}>
+                            <td class="slds-p-horizontal_small slds-text-align_center">{exchangeRate.currency}</td>
+                            <td class="slds-p-horizontal_small slds-text-align_center">{exchangeRate.rate}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    </lightning-card>
+</template>

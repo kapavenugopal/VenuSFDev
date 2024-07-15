@@ -1,0 +1,20 @@
+<apex:page standardController="Account">
+    <apex:form >
+       <apex:pageBlock title="Hello {!$User.FirstName}!">
+          You are viewing the {!account.name} account.
+       </apex:pageBlock>
+       
+       <apex:pageBlock title="Contacts">
+       <apex:pageBlockButtons >
+           <apex:commandButton action="{!Save}" value="Save"/>
+       </apex:pageBlockButtons>
+          <apex:pageBlockTable value="{!account.Contacts}" var="contact">
+             <apex:column value="{!contact.Name}"/>
+             <apex:column headerValue="MailingCity">
+                 <apex:inputField value="{!contact.MailingCity}"/>
+             </apex:column>
+             <apex:column value="{!contact.Phone}"/>
+          </apex:pageBlockTable>
+       </apex:pageBlock>
+   </apex:form>
+</apex:page>

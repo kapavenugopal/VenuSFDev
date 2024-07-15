@@ -1,0 +1,5 @@
+<aura:component implements='force:appHostable' >
+    
+        <h1 class="headline">Another H1 tag</h1>
+   
+</aura:component>

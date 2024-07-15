@@ -1,0 +1,114 @@
+<apex:page standardController="Job_Application__c" extensions="JobApplicationController" sidebar="false" showHeader="false"> 
+<style>
+        .myFormStyle {
+            background-color: #DDDDDD;
+        }
+    </style>
+
+<div style="background:#dddddd url('http://images.webestools.com/rounded_corn.php?rayon=20&fond=ffffff&interieur=dddddd&rotation=0') no-repeat top left;">
+<div style="background:url('http://images.webestools.com/rounded_corn.php?rayon=20&fond=ffffff&interieur=dddddd&rotation=3') no-repeat top right;">
+<div style="background:url('http://images.webestools.com/rounded_corn.php?rayon=20&fond=ffffff&interieur=dddddd&rotation=1') no-repeat bottom left;">
+<div style="background:url('http://images.webestools.com/rounded_corn.php?rayon=20&fond=ffffff&interieur=dddddd&rotation=2') no-repeat bottom right;padding-bottom:20px;padding-top:20px;padding-left:15px;">
+<ul><li><apex:outputLink value="https://c.ap2.visual.force.com/apex/Sample_Page1">
+ <apex:image url="data:image/png;base64,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"/>
+ </apex:outputLink></li>
+
+<br></br><br></br><br></br><br></br>
+<ul><li></li></ul>
+
+<div id="tabs">
+<style>
+ul {
+    float: left;
+    width: 200%;
+    padding: 10;
+    margin: 0;
+    list-style-type: none;
+}
+
+b {
+    float:left;
+    width: auto;
+    background-color: #EB6E1F;
+    padding:5px;
+    padding-right:50px;
+     padding-left:50px;
+    border-right: 1px solid white;
+    color:white;
+    font-size:small;
+}
+
+b:hover {
+    background-color: #083A81;
+}
+
+li {
+    display: inline;
+}
+</style>
+
+<ul>
+<li><b><apex:outputLink value="https://c.ap2.visual.force.com/apex/PositionsLandingPage" style="text-decoration: none; color:white">Positions</apex:outputLink></b></li>
+<li><b> <apex:outputLink value="https://ap2.salesforce.com/a04/o" style="text-decoration: none; color:white">Job Applications</apex:outputLink></b></li>
+<li><b><apex:outputLink value="https://c.ap2.visual.force.com/apex/CandidatesLandingPage" style="text-decoration: none; color:white">Candidates</apex:outputLink></b></li>
+<li><b><apex:outputLink value="https://c.ap2.visual.force.com/apex/EmploymentWebsiteLandingPage" style="text-decoration: none; color:white">Employment Websites</apex:outputLink></b></li>
+<li><b>{!$User.FirstName} {!$User.LastName}</b></li>
+<li><b><apex:outputLink value="/secur/logout.jsp" style=" text-decoration:none; color:white;">Logout</apex:outputLink></b></li>
+
+</ul>
+</div>
+</ul>
+<br></br><br></br><br></br><br></br>
+</div></div></div></div>
+<br></br><br></br><br></br>
+
+  <apex:sectionHeader title="Job Applications" subtitle="Job Application"/ >
+  <hr/>
+   <chatter:feedwithFollowers entityId="{!Job_Application__c.Id}"/>
+<apex:form styleClass="myFormStyle">
+  <apex:pageBlock title="Job Application Detail" mode="maindetail">
+  <center>
+   <apex:commandButton value="Edit" action="{!edit}" rendered="{!(($Profile.Name == "Recruiter")||($Profile.Name == "System Administrator"))}"/>
+      <apex:commandButton value="Delete" action="{!delete}"/>
+      <apex:commandButton action="{!URLFOR($Action.Job_Application__c.Clone, Id)}" id="Clone" value="Clone" />
+  </center> 
+  <apex:pageBlockSection columns="2" showHeader="true" >
+     <apex:outputField value="{!Job_Application__c.Name}" />
+     <apex:outputField value="{!Job_Application__c.Ownerid}"/>
+        <apex:outputField value="{!Job_Application__c.Candidate__c}" />
+        <apex:outputField value="{!Job_Application__c.CEO_Approved__c}"/>
+          </apex:pageBlockSection> 
+        <apex:pageBlockSection columns="1" showHeader="true" >
+   <apex:outputField value="{!Job_Application__c.Position__c}" />
+   <apex:outputField value="{!Job_Application__c.Cover_Letter__c}" rendered="{!NOT(ISBLANK(Job_Application__c.Cover_Letter__c))}" />
+     <apex:outputField value="{!Job_Application__c.Status__c}" />
+        <apex:outputField value="{!Job_Application__c.Total_Rating__c}" />
+           <apex:outputField value="{!Job_Application__c.Number_of_Reviews__c}" />
+           <apex:outputField value="{!Job_Application__c.Average_Rating__c}" />
+               </apex:pageBlockSection> 
+           <apex:pageBlockSection columns="2" showHeader="true" >
+            <apex:outputField value="{!Job_Application__c.CreatedByid}"/>
+           <apex:outputField value="{!Job_Application__c.LastModifiedByid}"/>
+           
+    
+               </apex:pageBlockSection> 
+    </apex:pageBlock>
+  </apex:form>
+
+        <apex:repeat value="{!Job_Application__c.OpenActivities}" var="temp" rows="1" >
+            <div class="row">
+            <apex:relatedList list="OpenActivities" />
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Job_Application__c.ActivityHistories}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="ActivityHistories"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Job_Application__c.Reviews__r}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="Reviews__r"/>
+            </div>
+        </apex:repeat>
+
+</apex:page>

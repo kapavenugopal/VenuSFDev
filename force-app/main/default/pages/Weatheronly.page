@@ -1,0 +1,12 @@
+<apex:page controller="TestWeather">
+<apex:form >
+<apex:pageBlock title="Global Weather Forecast">
+<b>Enter the country name:</b><apex:inputText value="{!country1}"/>
+<b>Enter the city name:</b><apex:inputText value="{!city}"/>
+<apex:commandButton action="{!getweather}" value="Weather" rerender="result1"/>
+<apex:pageBlock title="Weather Details">
+<apex:outputtext id="result1" value="{!weather}"></apex:outputtext>
+</apex:pageBlock>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,15 @@
+<apex:page controller="Accounts123" > 
+    <apex:form >
+        <apex:pageBlock mode="Edit" title="Test Block">
+        <apex:pageBlockSection columns="2" title="Info" showHeader="true">
+        <c:MultiselectPicklist leftLabel="Available Accounts"
+                leftOptions="{!allAccounts }"
+                rightLabel="Selected Accounts"
+                rightOptions="{!selectedAccounts}"
+                size="14"
+                width="150px"/>
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

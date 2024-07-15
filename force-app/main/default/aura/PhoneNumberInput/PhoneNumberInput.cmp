@@ -1,0 +1,7 @@
+<aura:component >
+  
+    <aura:registerEvent name="PhoneNumeberEvent" type="c:PhoneNumberEvent"/>
+    <ui:inputPhone aura:id="phone" label="phone"/>
+    <ui:button aura:id="phone" label="phone" press="{!c.send}"/>
+  
+</aura:component>

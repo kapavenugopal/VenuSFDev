@@ -1,0 +1,10 @@
+<aura:component >
+	<force:recordData aura:id="forceRecord"
+    recordId="{!v.recordId}" 
+    layoutType="FULL"
+    targetRecord="{!v._record}"
+    targetFields="{!v.simpleRecord}"
+    targetError="{!v._error}"
+    mode="EDIT"
+    recordUpdated="{!c.recordUpdated}" />
+</aura:component>

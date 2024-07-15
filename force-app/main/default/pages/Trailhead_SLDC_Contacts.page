@@ -1,0 +1,45 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">    
+
+<head>
+  <title>Salesforce Lightning Design System Trailhead Project</title>
+  <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+</head>
+
+<apex:remoteObjects >
+  <apex:remoteObjectModel name="Contact" fields="Id,Name,Title,LastModifiedDate,PhotoUrl"/>
+</apex:remoteObjects>
+
+<body>    
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">    
+
+    <!-- MASTHEAD -->
+    <p class="slds-text-heading--label slds-m-bottom--small">
+      Salesforce Lightning Design System Visualforce Workshop
+    </p>
+    <!-- / MASTHEAD -->    
+
+    <!-- PAGE HEADER -->
+    <!-- / PAGE HEADER -->
+
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp slds-m-top--large">
+      <ul id="contact-list" class="slds-list--vertical slds-has-cards"></ul>
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->
+
+    <!-- FOOTER -->
+    <!-- / FOOTER -->
+
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->    
+
+  <!-- JAVASCRIPT -->
+  <!-- / JAVASCRIPT -->
+
+</body>
+</html>
+</apex:page>

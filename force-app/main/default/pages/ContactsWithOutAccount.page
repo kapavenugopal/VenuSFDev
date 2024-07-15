@@ -1,0 +1,18 @@
+<apex:page controller="ContactWithOutAccount">
+<apex:form >
+<apex:pageBlock title="Contacts without Account">
+<apex:pageBlockSection >
+<apex:pageBlockTable value="{!contacts}" var="con">
+<apex:column headerValue="Select">
+<apex:inputCheckbox />
+</apex:column>
+<apex:column value="{!con.FirstName}"/>
+<apex:column value="{!con.LastName}"/>
+<apex:column value="{!con.AccountID}"/>
+</apex:pageBlockTable>
+<apex:pageBlockSection >
+</apex:pageBlockSection>
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

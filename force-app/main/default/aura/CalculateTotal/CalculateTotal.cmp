@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable">
+    <form>
+        <fieldset>
+ 
+    
+    <ui:inputNumber aura:id="inputOne" label="inputOne" />
+    <ui:inputNumber aura:id="inputTwo" label="inputTwo"/>
+    <ui:inputNumber aura:id="inputThree" label="inputThree"/>
+    
+    <ui:button aura:id="cal" label="calculate" press="{!c.calculate}"/>
+            <ui:outputNumber aura:id="totalValue" value=""/>
+        </fieldset>
+    </form>
+</aura:component>

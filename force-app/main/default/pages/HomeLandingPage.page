@@ -1,0 +1,159 @@
+<apex:page standardController="Home__c" extensions="HomeController" sidebar="false" showHeader="false"> 
+<div style="border: 1px solid #353539;-webkit-border-radius: 5px;-moz-border-radius: 5px;">
+<apex:outputLink value="https://c.ap2.visual.force.com/apex/Sample_Page1"><apex:image url="https://c.ap2.visual.force.com/resource/1446547311000/Alliance_logo"/> </apex:outputLink>
+<style>
+.menu,
+.menu ul,
+.menu li,
+.menu a {
+    margin: auto;
+    border: none;
+    outline: none;
+}
+ 
+.menu {
+    height: 35px;
+    width: 96.9%;
+    background: #EB6E1F;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 10px;
+    border-color: #e5e5e5;
+
+}
+
+.menu li {
+    position: relative;
+    list-style: none;
+    float: left;
+    display: block;
+    height: 40px;
+}
+.menu li a {
+    display: block;
+    padding: 0 14px;
+    margin: 6px;
+    line-height: 28px;
+    text-decoration: none;
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    color: #fff;
+    -webkit-transition: color .5s ease-in-out;
+    -moz-transition: color .5s ease-in-out;
+    -o-transition: color .5s ease-in-out;
+    -ms-transition: color .5s ease-in-out;
+    transition: color .5s ease-in-out;
+}
+ 
+.menu li:first-child a { border-left: none; }
+.menu li:last-child a{ border-right: none; }
+ 
+.menu li:hover > a { background-color: #083A81; }
+    .menu ul {
+    opacity: 1;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-transition: opacity .5s ease .1s;
+    -moz-transition: opacity .5s ease .1s;
+    -o-transition: opacity .5s ease .1s;
+    -ms-transition: opacity .5s ease .1s;
+    transition: opacity .5s ease .1s;
+}
+body .bPageBlock .pbBody .pbSubheader{
+border-width:3px 0px 0px;
+} 
+.menu li:hover > ul { opacity: 1; }
+ 
+.menu ul li {
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+
+    -webkit-transition: height .5s ease .1s;
+    -moz-transition: height .5s ease .1s;
+    -o-transition: height .5s ease .1s;
+    -ms-transition: height .5s ease .1s;
+    transition: height .5s ease .1s;
+}
+ 
+.menu li:hover > ul li {
+    height: 36px;
+    overflow: visible;
+    padding: 0px 0px 0px 0px;
+    -webkit-transition: height .25s ease .1s;
+    -moz-transition: height .25s ease .1s;
+    -o-transition: height .25s ease .1s;
+    -ms-transition: height .25s ease .1s;
+    transition: height .25s ease .1s;
+}
+.menu li:hover > ul li{
+
+border: 1px solid black;
+-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-color:#EB6E1F
+
+}
+.menu ul li a {
+    width: 100px;
+    padding: 4px 0 4px 40px;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #353539;
+}
+ 
+.menu ul li:last-child a { border: none; }
+.bPageTitle,body {
+background-color:#f8f8f8;
+}
+.bPageBlock{
+border-top:1px solid #fc8744;
+}
+body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton{
+background-color:#e5e5e5;
+}
+</style>
+
+<ul class="menu">
+ <center>
+  <li><a href="https://c.ap2.visual.force.com/apex/HomeLandingPage">Home</a></li>
+    <li><a href="https://c.ap2.visual.force.com/apex/PositionsLandingPage">Positions</a></li>
+    <li><a href="https://c.ap2.visual.force.com/apex/JobApplicationsLandingPage">Job Applications</a></li>
+    <li><a href="https://c.ap2.visual.force.com/apex/CandidatesLandingPage">Candidates</a></li>
+    <li><a href="https://c.ap2.visual.force.com/apex/EmploymentWebsiteLandingPage">Employment Websites</a></li>
+    <li><a href="#">{!$User.FirstName} {!$User.LastName}</a>
+ 
+        <ul>
+            <li><a href="/secur/logout.jsp" class="signout">Log out</a></li>
+        </ul>
+    </li> 
+    </center>
+</ul>
+</div>
+
+  <apex:sectionHeader title="Home"/ >
+  
+<apex:form styleClass="myFormStyle">
+  <apex:pageBlock title="Home Detail" mode="maindetail"> 
+   </apex:pageBlock>
+  </apex:form>
+   <apex:repeat value="{!Home__c.OpenActivities}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="OpenActivities" />
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Home__c.ActivityHistories}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="ActivityHistories"/>
+            </div>
+        </apex:repeat>
+         <apex:relatedList list="Opportunities" />
+
+    <apex:relatedList list="Contacts">
+        <apex:facet name="header">Titles can be overriden with facets</apex:facet>
+    </apex:relatedList>
+
+    <apex:relatedList list="Cases" title="Or you can keep the image, but change the text" />
+
+</apex:page>

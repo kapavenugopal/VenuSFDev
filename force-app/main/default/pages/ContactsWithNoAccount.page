@@ -1,0 +1,26 @@
+<apex:page controller="ConWithNoAccSelector">
+    <apex:form >
+        <apex:pageBlock title="Contacts Without Account">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Show Selected Contact" action="{!selectedCon}" reRender="table2"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="3">
+                <apex:pageBlockTable value="{!wrapContactList}" var="wrapCon" id="table1" title="All Contacts with no account">
+                    <apex:column headerValue="Select">
+                        <apex:inputCheckbox value="{!wrapCon.selected}"/>
+                    </apex:column>
+                    <apex:column value="{!wrapCon.con.Firstname}"/>
+                    <apex:column value="{!wrapCon.con.Lastname}"/>
+                    <apex:column value="{!wrapCon.con.AccountID}"/>
+                </apex:pageBlockTable>
+                <apex:pageBlockTable value="{!selectedContactList}" var="selCon" id="table2" title="Selected Contacts">
+                    <apex:column value="{!selCon.FirstName}"/>
+                    <apex:column value="{!selCon.LastName}"/>
+                    <apex:column value="{!selCon.AccountID}"/>
+                    
+                </apex:pageBlockTable>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

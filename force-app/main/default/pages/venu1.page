@@ -1,0 +1,13 @@
+<apex:page standardController="contact">
+    <apex:form >
+   <apex:pageBlock title="Edit Details">
+    <apex:pageBlockSection columns="1">
+        <apex:inputField value="{!contact.FirstName}"/>
+        <center><apex:image id="theImage" value="http://www.rajnikantvscidjokes.in/wp-content/uploads/2015/09/Pawan-Kalyan.jpg" width="220px" height="200px" title="venu" onmouseover="victor"/></center>
+       </apex:pageBlockSection>
+       <apex:pageBlockButtons >
+           <apex:commandButton action="{!save}" value="save"/> 
+       </apex:pageBlockButtons>
+    </apex:pageBlock>
+        </apex:form>
+</apex:page>

@@ -1,0 +1,10 @@
+<apex:page showHeader="true" standardStylesheets="false">
+    <apex:stylesheet value="{!$Resource.customCSS}"/>
+    <h1>This is heading</h1>
+    <p>This is the paragraph</p>
+    
+    <apex:outputLink value="www.salesforce.com" styleClass="newLink">
+    Click here to switch to salesforce.com
+    </apex:outputLink>
+
+</apex:page>

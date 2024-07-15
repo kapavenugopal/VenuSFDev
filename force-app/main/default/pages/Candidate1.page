@@ -1,0 +1,346 @@
+<apex:page standardController="Candidate__c" extensions="CandidateController">
+  <apex:sectionHeader title="Candidates" subtitle="Candidate"/ >
+  <hr/>
+  <chatter:feedWithFollowers entityId="{!Candidate__c.Id}"/>
+   <style>
+      .bodyDiv, 
+      .bodyDiv *,  
+      #AppBodyHeader,
+      #AppBodyHeader *,
+      .tabNavigation,
+  
+      .tabNavigation *
+      {
+          allowtransparency:true!important;
+          <!-- background-image:none!important;-->
+          border:none!important;
+          background-color:transparent!important;
+          border-radius: 7px;
+      }
+      
+      .sfdcBody
+      {
+          background-position: -150px -91px!important;
+          background-repeat:repeat!important;
+          background-attachment:fixed!important;
+      }
+      
+  #userNavButton
+      {
+          background-color:#FFAD99!important;
+          top:1px!important;
+          right:auto!important;
+          
+      }
+    
+     
+       #userNavButton:hover
+      {
+          background-image:none !important;
+          background-color:#7777FF !important;
+          top:1px!important;
+          right:auto!important;
+
+}
+
+  #userNavMenu
+      {
+           background-color:white!important;
+          top:1px!important;
+          right:auto!important;
+          
+      }
+     
+      .navLinks
+      {
+          background-color:#FFAD99!important;
+          top:2px!important;
+          right:14%!important;
+          color:blue!important;
+      }
+      .multiforce
+      {
+      background-color:#FFAD99!important;
+      }    
+    
+      #tsidButton
+      {
+          background-color:#FFAD99!important;
+          top:1px!important;
+          right:auto!important;
+          
+      }
+    
+ #tsidButton:hover
+{
+background-image:none !important;
+background-color:#7777FF !important;
+ top:1px!important;
+          right:auto!important;
+}
+      <!--img#phHeaderLogoImage
+      {
+          opacity:0.0 !important;
+          filter:alpha(opacity=00) !important;
+      }-->
+      #tsid-menuItems
+      {
+      background-color:white!important;
+      }
+            
+      #tabBar
+      {
+          background-color:#FFAD99!important;
+      }
+      
+      .tabNavigation
+      {
+          background-color:#7777FF!important;
+          z-index:200!important;
+          top:2px!important;
+          left:15%!important;
+      }
+      
+      
+  
+      
+      body .x-btn button,
+      \nbody .btn,
+      \nbody .btnImportant,
+      \nbody .btnDisabled,
+      \nbody .btnCancel,
+      \nbody .menuButton .menuButtonButton,
+      \nbody .menuButton .menuButtonMenu a,
+      \nbody .menuButton .menuButtonMenu input.theOption,
+      \nh1, h2, h3, h4, h5, h6
+      \n.reportTab 
+      .bWizardBlock 
+      .pbWizardTitle,
+      
+      .reportTab 
+      .bWizardBlock 
+      .chartStep 
+      .pbDescription,
+      
+      .bWizardBlock 
+      .pbBody 
+      .bPageBlock 
+      .pbLinks a span,
+      
+      .chatterShowHideFeed a,
+      
+      .chatterFollowUnfollow 
+      .followLink a:hover 
+      .linkText,
+      
+      body.allTabTab 
+      .bPageTitle 
+      .ptBody 
+      .content,
+      
+      body.allTabTab 
+      .bDescription,
+      
+      .sysAdminTab 
+      .bPageTitle 
+      .ptBody 
+      .content,
+      
+      .homeTab 
+      .bPageTitle 
+      .ptBody 
+      .content,
+      
+      .labelCol,
+      
+      .allTabTab 
+      .bPageTitle 
+      .ptBody 
+      .content, 
+      
+      #userNav *,
+      
+      #userNav,
+      
+      body 
+      .bPageBlock 
+      .pbHeader 
+      .pbHelp 
+      .help a
+      .linkCol:hover 
+      .linkSpan,
+      
+      body 
+      .bPageBlock 
+      .pbBody 
+      .pbSubblock 
+      .pbSubbody a:hover 
+      .helpLink,
+      
+      body 
+      .bWizardBlock a:hover 
+      .helpLink,
+      
+      body 
+      .bPageTitle 
+      .tagDropDown 
+      .tagDropDownContent 
+      .tagHelp a:hover span,
+      
+      body 
+      .bMyDashboard 
+      .pbHeader 
+      .pbHelp a:hover,
+      
+      .tab
+      {
+          
+          color:black!important;
+          font-style: auto!important;
+          background-color: none!important;
+          
+      }a, 
+      
+      a *,
+      
+      .dataCol
+      {
+         
+          color:black!important;
+      }
+      
+      .x-btn,
+       
+      button, 
+      
+      .btn, 
+      
+      .btnImportant, 
+      
+      .btnDisabled, 
+      
+      .btnCancel,
+      
+      .menuButton, 
+      
+      
+      
+      .tabNavigation,
+      
+      .tabNavigation 
+      *{
+          background-color:#7777FF!important;
+          color:black!important;
+          
+      }
+      
+      .menuButtonLabel
+      {
+      color:white!important;
+      }
+      
+      .menuButton{
+      background-image:none!important;
+      
+      }
+      
+      .menuButtonMenu{
+      background-color:white!important;
+      }
+      
+      .menuButton a:hover{
+      background-color:#7777FF!important;
+      }
+      td.searchCell, 
+      td.searchCell *,
+      {
+          border:1px solid black!important;
+          color:red!important;
+          background-color:black!important;
+      }
+  
+      *{
+          background-color: rgba(255, 255, 255, 255)!important;
+      }
+      
+      button,
+      
+      .btn,
+      
+      .btnImportant,
+      
+      .btnDisabled,
+      
+      .btnCancel
+      {
+          background-color:#000099!important;
+          border:0px rgba(239, 247, 251, .6)!important;
+      }
+ 
+  </style>
+  
+<apex:form >
+  <apex:pageBlock title="Candidate Detail" mode="maindetail">
+ <!-- <apex:pageBlockSection showHeader="true" ></apex:pageBlockSection> -->
+ <center>
+   <apex:commandButton value="Edit" action="{!edit}"/>
+     <apex:commandButton value="Delete" action="{!delete}"/>
+   <apex:commandButton action="{!URLFOR($Action.Candidate__c.Clone, Id)}" id="Clone" value="Clone" />
+       </center> 
+  <apex:pageBlockSection columns="2" showHeader="true" >
+  
+     <apex:outputField value="{!Candidate__c.Name}" />
+     <apex:outputField value="{!Candidate__c.Ownerid}"/>
+        <apex:outputField value="{!Candidate__c.First_Name__c}" />
+        <apex:outputField value="{!Candidate__c.Phone__c}" rendered="{!NOT(ISBLANK(Candidate__c.Phone__c))}" />
+        <apex:outputField value="{!Candidate__c.Last_Name__c}"/>
+        <apex:outputField value="{!Candidate__c.Mobile__c}" rendered="{!NOT(ISBLANK(Candidate__c.Mobile__c))}" />
+       
+        <apex:outputField value="{!Candidate__c.SSN__c}" rendered="{!NOT(ISBLANK(Candidate__c.SSN__c)) && ($Profile.Name == "System Administrator" || $Profile.Name == "Recruiter")}"/>
+
+         <apex:outputField value="{!Candidate__c.Email__c}"/>
+        <apex:outputField value="{!Candidate__c.Fax__c}" rendered="{!NOT(ISBLANK(Candidate__c.Fax__c))}" />
+  
+          </apex:pageBlockSection> 
+          
+        <apex:pageBlockSection columns="2" showHeader="true" title="Address">
+        <hr color ="red"/>
+          <apex:outputField value="{!Candidate__c.Street__c}" rendered="{!NOT(ISBLANK(Candidate__c.Street__c))}" />
+     <apex:outputField value="{!Candidate__c.LastModifiedByid}"/>
+        <apex:outputField value="{!Candidate__c.City__c}" rendered="{!NOT(ISBLANK(Candidate__c.City__c))}" />
+        <apex:outputField value="{!Candidate__c.State_Province__c}" rendered="{!NOT(ISBLANK(Candidate__c.State_Province__c))}" />
+        <apex:outputField value="{!Candidate__c.CreatedByid}"/>
+        <apex:outputField value="{!Candidate__c.Zip_Postal_Code__c}" rendered="{!NOT(ISBLANK(Candidate__c.Zip_Postal_Code__c))}" />
+          <apex:outputField value="{!Candidate__c.Country__c}" rendered="{!NOT(ISBLANK(Candidate__c.Country__c))}" />
+
+                  </apex:pageBlockSection> 
+          <apex:pageBlockSection columns="2" showHeader="true" title="Employment">
+          <apex:outputField value="{!Candidate__c.Currently_Employed__c}" />
+     <apex:outputField value="{!Candidate__c.Years_of_Experience__c}" rendered="{!NOT(ISBLANK(Candidate__c.Years_of_Experience__c))}" />
+        <apex:outputField value="{!Candidate__c.Current_Employer__c}"  rendered="{!NOT(ISBLANK(Candidate__c.Current_Employer__c))}" />
+                  </apex:pageBlockSection>
+ <apex:pageBlockSection columns="2" showHeader="true" title="Additional Details">
+          <apex:outputField value="{!Candidate__c.US_Citizen__c}" rendered="{!(Candidate__c.US_Citizen__c)}" />
+         
+     <apex:outputField value="{!Candidate__c.Education__c}" rendered="{!NOT(ISBLANK(Candidate__c.Education__c))}" />
+        <apex:outputField value="{!Candidate__c.Visa_Required__c}" rendered="{!(Candidate__c.Visa_Required__c)}" />
+                  </apex:pageBlockSection>
+    </apex:pageBlock>
+  </apex:form>
+  <apex:repeat value="{!Candidate__c.OpenActivities}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="OpenActivities"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Candidate__c.ActivityHistories}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="ActivityHistories"/>
+            </div>
+        </apex:repeat>
+        <apex:repeat value="{!Candidate__c.Job_applications__r}" var="temp" rows="1">
+            <div class="row">
+            <apex:relatedList list="Job_applications__r"/>
+            </div>
+        </apex:repeat>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

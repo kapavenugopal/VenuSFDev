@@ -1,0 +1,13 @@
+<apex:page controller="ExportPublicGroupsandQueues">
+<apex:form >
+<apex:pageblock title="Export Report">
+
+    <apex:outputText > Select Queue/Public Group</apex:outputText> <br></br>
+    <apex:selectList size="1" value="{!selectedname}"> 
+        <apex:selectOptions value="{!selectedaccnamefields}"/>  
+    </apex:selectList>
+    <apex:commandButton value="Export" />
+    </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

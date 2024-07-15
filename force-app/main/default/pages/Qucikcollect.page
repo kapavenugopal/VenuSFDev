@@ -1,0 +1,17 @@
+<apex:page standardController="Donation__c" >
+<apex:form >
+  <!-- Begin Default Content REMOVE THIS -->
+  Hello,{!$user.FirstName}<br />
+  <apex:pageBlock title="Donation Edit"> 
+    The donation value is 
+    <apex:pageBlockSection columns="2" title="Donation Details">
+    <apex:inputField value="{!Donation__c.Donationamount__c}"/><br />
+    </apex:pageBlockSection>
+    <apex:pageBlockButtons >
+  <apex:commandButton action="{!save}" value="update Donation"/>
+  </apex:pageBlockButtons>
+  <apex:detail />
+  </apex:pageBlock>
+  </apex:form>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

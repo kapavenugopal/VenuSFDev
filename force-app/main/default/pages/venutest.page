@@ -1,0 +1,48 @@
+<apex:page standardController="Account">
+<style>
+
+.tableStyle {border-collapse:collapse;}
+.colStyle1 { width: 50%;text-align:right; padding-right:300px; border-right:5px solid #000;}
+.colStyle2 { width: 50%; text-align:right; padding-left:30px; }
+
+.rowstyle { padding:0px; }
+</style>
+<apex:form >
+<apex:pageBlock title="Sample Edit" mode="detail">
+<apex:pageBlockButtons >
+<apex:commandButton action="{!save}" value="Save"/>
+<apex:commandButton action="{!cancel}" value="Cancel"/>
+</apex:pageBlockButtons>
+
+ 
+
+    <apex:panelGrid columns="1" id="theGrid">
+        <apex:outputText value="First" id="theFirst"/>
+        <apex:outputText value="Second" id="theSecond"/>
+        <apex:outputText value="Third" id="theThird"/>
+        <apex:outputText value="Fourth" id="theFourth"/>
+    </apex:panelGrid>
+
+<apex:panelGrid columns="1" border="0" styleClass="tableStyle" width="100%" columnClasses="colStyle1,colStyle2" rowClasses="rowstyle">
+<apex:pageBlockSection title="Account Details" columns="1">
+
+                <apex:inputField value="{!Account.name}"/>
+                <apex:inputField value="{!Account.Website}"/>
+                <apex:inputField value="{!Account.Industry}"/>
+                <apex:inputField value="{!Account.AnnualRevenue}"/>
+
+            </apex:pageBlockSection>
+                </apex:panelGrid>
+
+
+<apex:pageBlockSection title="Account Details" columns="2">
+                <apex:inputField value="{!Account.name}"/>
+                <apex:inputField value="{!Account.Website}"/>
+                <apex:inputField value="{!Account.Industry}"/>
+                <apex:inputField value="{!Account.AnnualRevenue}"/>
+            </apex:pageBlockSection>
+
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>
